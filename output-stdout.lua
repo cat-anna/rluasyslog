@@ -9,8 +9,7 @@ function OutputStdout:_init(config)
 end
 
 function OutputStdout:Write(data)
-    -- plpretty.dump(data)
-    print(string.formatEx(self.config.pattern, data))
+    print(string.formatEx(self.config.lineFormat, data))
 end
 
 return OutputStdout
