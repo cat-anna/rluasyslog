@@ -8,6 +8,7 @@ function OutputFile:_init(config)
     assert(type(config.lineFormat) == "string")
     self.config = config
     self.handle = io.open(config.fileName, "a+")
+    self.handle:setvbuf("no")
 end
 
 function OutputFile:Write(data)

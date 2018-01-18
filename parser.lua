@@ -1,6 +1,8 @@
 local plpretty = require "pl.pretty"
 local class = require("pl.class")
 local utils = require("utils")
+local syslog = require("syslog")
+local date = require("pl.Date")
 
 local Parser = class()
 
@@ -36,7 +38,7 @@ function Parser:Parse(data)
     for i,v in ipairs(self.parsers) do
         local success, output = v:TryParse(data)
         if success then
-            self.output(utils.MakeRO(output))
+            self.output(output)
             return true
         end
     end

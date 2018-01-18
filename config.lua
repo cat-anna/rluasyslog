@@ -3,15 +3,19 @@ print "Loading default configuration"
 
 local config = {}
 
-config.input = {}
-config.input.udp = {
-    listen = { "*:514" },
+config.input = {
+    udp = {
+        listen = { 
+            "*:514" 
+        },
+    },
 }
 
 config.parser = {}
 config.parser.modules = {
     "espeasy",
-    -- "generic",
+    "rsyslog",
+    "raw",
 }
 
 -- facility = fac,
@@ -25,7 +29,7 @@ config.parser.modules = {
 -- dateString = os.date("%c", data.reciveTime),
 -- source = data.source,
 
-local lineFormat = "{dateString} {facilityString}:{priorityString} {source} {group}:{message}"
+local lineFormat = "{dateString} {facilityString}:{priorityString} {sender} {group}:{message}"
 
     -- hostname
     -- year (four digits), 
@@ -40,13 +44,13 @@ local lineFormat = "{dateString} {facilityString}:{priorityString} {source} {gro
 config.output = {}
 config.output.modules = {
     { class = "stdout", lineFormat = lineFormat, },
-    { class = "websocket", port = 8082 },
-    { class = "file", lineFormat = lineFormat, fileName = "/var/log/rluasys.log" },
-    { 
-        class = "file-rotate",
-        lineFormat = lineFormat, 
-        filePattern = "/var/log/{hostname}-{year}{month}{day}.log", 
-    },
+    -- { class = "websocket", port = 8082 },
+    -- { class = "file", lineFormat = lineFormat, fileName = "/var/log/rluasys.log" },
+    -- { 
+    --     class = "file-rotate",
+    --     lineFormat = lineFormat, 
+    --     filePattern = "/var/log/{hostname}-{year}{month}{day}.log", 
+    -- },
 }
 
 return config

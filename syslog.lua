@@ -21,6 +21,7 @@ local PriorityNamesTable = {
     [syslog.PRI_NOTICE ] = "notice",
     [syslog.PRI_INFO   ] = "info",
     [syslog.PRI_DEBUG  ] = "debug",
+    [syslog.PRI_UNKNOWN] = "unknown",
 }
 
 syslog.PriorityNames = setmetatable({}, {

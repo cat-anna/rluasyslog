@@ -1,5 +1,8 @@
 local plpretty = require "pl.pretty"
 local class = require("pl.class")
+local date = require("pl.Date")
+local syslog = require("syslog")
+local utils = require("utils")
 
 local Output = class()
 
@@ -8,6 +11,7 @@ function Output:_init(args)
     -- assert(args.output)
     self.config = args.config
     self.outputs = { }
+    self.dateFormatter = date.Format("dd-mm-yyyy HH:MM:SS")
 
     for i,v in ipairs(args.config.modules) do
         local cfg
@@ -27,10 +31,22 @@ function Output:LoadOutput(output)
     table.insert(self.outputs, instance)
 end
 
+function Output:UpdateData(out)
+    if not out.dateString then
+        out.dateString = self.dateFormatter:tostring(out.timestamp or out.receiveTime)
+    end
+    out.facilityString = syslog.FacilityNames[out.facility]
+    out.priorityString = syslog.PriorityNames[out.priority]
+    return utils.MakeRO(out)
+end
+
 function Output:Write(data)
     if not data then
         return
     end
+
+    data = self:UpdateData(data)
+        
     for i,v in ipairs(self.outputs) do
         v:Write(data)
     end

@@ -36,6 +36,7 @@ function OutputFile:CheckRotate()
             self.handle:close()
         end
         local h = io.open(fn, "a+")
+        h:setvbuf("no")        
         self.handle = h
         return h
     end

@@ -35,7 +35,7 @@ function UDP:SocketHandler(skt)
       local hostname = socket.dns.tohostname(sourceIP) or sourceIP
       self.output{
           data = data,
-          source = string.format("%s:%d", hostname, sourcePort),
+          source = hostname,--string.format("%s:%d", hostname, sourcePort),
           receiveTime = os.time(),
       }
     end

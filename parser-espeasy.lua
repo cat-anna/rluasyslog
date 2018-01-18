@@ -10,7 +10,7 @@ end
 function ParserEspEasy:Init(args)
 end
 
-local ESPEasyRegExp = [==[%<(%d+)%>ESP%s+Unit:%s+(%d+)%s+:%s+(%w+)%s+:%s+(.+)]==]
+local ESPEasyRegExp = [==[%<(%d+)%>ESP%s+Unit:%s+(%d+)%s*:%s*(%w+)%s*:%s*(.+)]==]
 function ParserEspEasy:TryParse(data)
     local pri, unit, group, message = data.data:match(ESPEasyRegExp)
 
@@ -22,16 +22,13 @@ function ParserEspEasy:TryParse(data)
 
     local entry = {
         facility = fac,
-        facilityString = syslog.FacilityNames[fac],
         priority = prio,
-        priorityString = syslog.PriorityNames[prio],
 
-        sender = string.format("EspEasy %d", unit),        
+        sender = data.source,--string.format("EspEasy-%d", unit),        
         message = message,
         group = group,
 
         timestamp = data.receiveTime,
-        dateString = os.date("%c", data.receiveTime),
         source = data.source,
     }
 
