@@ -66,7 +66,7 @@ function Parser:ParseDate(date_month, date_day, date_hour)
     return true, d.time
 end
 
-local RegExp = [==[%<(%d+)%>%s*(.-) (%d+) ([%d%:]+)%s+(%a-)%s*([%a%-]-)%-?%[?(%d*)%]?%s*:%s*(.+)]==]
+local RegExp = [==[%<(%d+)%>%s*(.-)%s*(%d+)%s*([%d%:]+)%s+([%w%.]+)%s*([%a%-]-)%-?%[?(%d*)%]?%s*:%s*(.+)]==]
 function Parser:TryParse(data)
     local pri, date_month, date_day, date_hour, sender, service, pid, msg = data.data:match(RegExp)
 
