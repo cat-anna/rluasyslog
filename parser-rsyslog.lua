@@ -90,7 +90,8 @@ function Parser:TryParse(data)
 
         sender = sender,
         message = msg,
-        group = string.format("%s[%s]", service, tostring(pid)),
+        group = string.format("%s", service),
+        pid = pid,
 
         timestamp = timestamp,
         source = data.source,
