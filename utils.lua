@@ -13,7 +13,7 @@ end
 
 function string.formatEx(pattern, args)
     for k,v in pairs(args) do
-        pattern = pattern:gsub("{" .. k .. "}", v)
+        pattern = pattern:gsub("{" .. tostring(k) .. "}", tostring(v))
     end
     return pattern
 end
